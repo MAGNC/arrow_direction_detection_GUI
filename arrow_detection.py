@@ -176,17 +176,20 @@ class Ui_MainWindow(object):
         a.display_matching(res, a.thresh, a.target_origin, a.template_width[max_index], a.template_high[max_index])
 
         # 转换RGB，输出对应模板
-        converted_ = cv.cvtColor(a.template[max_index], cv.COLOR_BGR2RGB)
-        if max_index == 0:
-            print("向左")
-        elif max_index == 1:
-            print("向右")
-        elif max_index == 2:
-            print("向上")
-        elif max_index == 3:
-            print("向下")
-        a.plot(converted_)
-        print("匹配结束")
+        if count != [0, 0, 0, 0]:
+            converted_ = cv.cvtColor(a.template[max_index], cv.COLOR_BGR2RGB)
+            if max_index == 0:
+                print("向左")
+            elif max_index == 1:
+                print("向右")
+            elif max_index == 2:
+                print("向上")
+            elif max_index == 3:
+                print("向下")
+            a.plot(converted_)
+            print("匹配结束")
+        else:
+            print("未检测到箭头")
 
 
     def retranslateUi(self, MainWindow):
