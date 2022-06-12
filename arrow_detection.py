@@ -14,10 +14,12 @@ import sys
 import numpy as np
 import tqdm
 import time
+import threading
 
 class Handle:
 
     def __init__(self):
+        self.m = None
         self.thresh = 0.4
         self.template_left = self.get_outline('template_left.png')
         self.template_right = self.get_outline('template_right.png')
@@ -52,7 +54,11 @@ class Handle:
         for pt in zip(*loc[::-1]):  # zip(*loc)将loc的值转化为列表，然后再转化为元组，也就是所有的匹配结果的位置
             target = cv.rectangle(target, pt, (pt[0] + width, pt[1] + high), (0, 0, 255), 2)
         target = cv.cvtColor(target, cv.COLOR_BGR2RGB)
-        self.plot(target)
+        self.m = threading.Thread(target=self.plot, args=(target, ))
+        self.m.setDaemon(True)
+        self.m.start()
+        self.m.join(1)
+        #self.plot(target)
 
 
     def get_width_high(self, template_set):
@@ -186,7 +192,11 @@ class Ui_MainWindow(object):
                 print("向上")
             elif max_index == 3:
                 print("向下")
-            a.plot(converted_)
+            t = threading.Thread(target=a.plot, args=(converted_,))
+            t.setDaemon(True)
+            t.start()
+            t.join(1)
+            #a.plot(converted_)
             print("匹配结束")
         else:
             print("未检测到箭头")
