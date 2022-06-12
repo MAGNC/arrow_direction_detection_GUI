@@ -163,11 +163,11 @@ class Ui_MainWindow(object):
                     count[index] += x
 
         # 找到最大相似度的模板
-        # print(count)
+        print(count)
         max_value = max(count)
         max_index = count.index(max_value)  # 找到最大值对应的被匹配的模板
         max_similar_template = a.template[max_index]
-        # print(all_match_matrix[max_index])#打印每个像素的相似值矩阵
+        print(all_match_matrix[max_index])#打印每个像素的相似值矩阵
         end = time.time()
         print('Running time: %s Seconds' % (end - start))
 
@@ -177,13 +177,14 @@ class Ui_MainWindow(object):
 
         # 转换RGB，输出对应模板
         converted_ = cv.cvtColor(a.template[max_index], cv.COLOR_BGR2RGB)
-        big = {}
-        big[a.template[0]] = "left"
-        big[a.template[1]] = "right"
-        big[a.template[2]] = "up"
-        big[a.template[3]] = "down"
-        #call(['python', 'arrow_detection.py', '{}'.format(self.openfile_name)])
-        print("箭头方向为{}".format(big[max_similar_template]))
+        if max_index == 0:
+            print("向左")
+        elif max_index == 1:
+            print("向右")
+        elif max_index == 2:
+            print("向上")
+        elif max_index == 3:
+            print("向下")
         a.plot(converted_)
         print("匹配结束")
 
