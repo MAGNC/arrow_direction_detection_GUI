@@ -177,7 +177,6 @@ class Ui_MainWindow(object):
 
         # 转换RGB，输出对应模板
         converted_ = cv.cvtColor(a.template[max_index], cv.COLOR_BGR2RGB)
-        a.plot(converted_)
         big = {}
         big[a.template[0]] = "left"
         big[a.template[1]] = "right"
@@ -185,6 +184,7 @@ class Ui_MainWindow(object):
         big[a.template[3]] = "down"
         #call(['python', 'arrow_detection.py', '{}'.format(self.openfile_name)])
         print("箭头方向为{}".format(big[max_similar_template]))
+        a.plot(converted_)
         print("匹配结束")
 
 
